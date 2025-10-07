@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sabores do Brasil - Cozinha Click</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game">
+    <header>
+      <h1>🍽️ Sabores do Brasil — Cozinha Click</h1>
+      <div id="hud">
+        <div>Pedido ativo: <strong id="pedido-nome">—</strong></div>
+        <div>Pontos: <strong id="pontos">0</strong></div>
+        <div>Highscore: <strong id="highscore">0</strong></div>
+      </div>
+    </header>
+
+    <main>
+      <!-- área das mesas -->
+      <section id="saloon">
+        <div class="mesa" data-mesa="1">
+          <div class="mesa-top">Mesa 1</div>
+          <div class="cliente oculto" id="cliente-1">
+            <div class="balão"><span class="pedido-text">—</span></div>
+            <div class="barra-paciencia"><div class="barra-fill"></div></div>
+            <div class="sprite">🙂</div>
+          </div>
+        </div>
+
+        <div class="mesa" data-mesa="2">
+          <div class="mesa-top">Mesa 2</div>
+          <div class="cliente oculto" id="cliente-2">
+            <div class="balão"><span class="pedido-text">—</span></div>
+            <div class="barra-paciencia"><div class="barra-fill"></div></div>
+            <div class="sprite">😋</div>
+          </div>
+        </div>
+
+        <div class="mesa" data-mesa="3">
+          <div class="mesa-top">Mesa 3</div>
+          <div class="cliente oculto" id="cliente-3">
+            <div class="balão"><span class="pedido-text">—</span></div>
+            <div class="barra-paciencia"><div class="barra-fill"></div></div>
+            <div class="sprite">😄</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- balcão / ingredientes -->
+      <aside id="balcao">
+        <div id="background-placeholder">Balcão</div>
+
+        <button id="ver-receitas">📖 Receitas</button>
+
+        <div id="ingredientes">
+          <button class="ing" data-ing="Arroz">🍚 Arroz</button>
+          <button class="ing" data-ing="Feijão">🫘 Feijão</button>
+          <button class="ing" data-ing="Carne">🥩 Carne</button>
+          <button class="ing" data-ing="Peixe">🐟 Peixe</button>
+          <button class="ing" data-ing="Coco">🥥 Coco</button>
+          <button class="ing" data-ing="Farinha">🌾 Farinha</button>
+          <button class="ing" data-ing="Vinagrete">🥗 Vinagrete</button>
+        </div>
+
+        <div id="prato-area">
+          <p>Monte o prato aqui:</p>
+          <div id="prato"></div>
+          <div id="acoes">
+            <button id="limpar">Limpar Prato</button>
+            <button id="entregar">🍴 Entregar Pedido</button>
+          </div>
+          <!-- <div id="fogao">
+            🔥 Fogão
+            <button id="cozinhar">Cozinhar</button>
+          </div> -->
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div id="controls">
+        <button id="start">Iniciar Jogo</button>
+        <button id="reset">Reiniciar</button>
+      </div>
+      <p class="small">Protótipo TCC — edite ingredientes/pedidos em <code>script.js</code></p>
+    </footer>
+  </div>
+
+  <!-- Modal receitas -->
+  <div id="modal-receitas" class="modal oculto">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Receitas</h3>
+      <ul id="lista-receitas"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
