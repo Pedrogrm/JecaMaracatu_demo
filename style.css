@@ -249,6 +249,21 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:12p
   font-size:20px;
 }
 
+/* --- ANIMAÇÃO DE ERRO NAS MESAS --- */
+@keyframes piscar-vermelho {
+  0%, 100% {
+    background: linear-gradient(180deg,#fff 0%, #f0e6da 100%);
+  }
+  25%, 75% {
+    background: linear-gradient(180deg, #ffbfbf 0%, #ff9999 100%);
+  }
+}
+
+.mesa.erro {
+  animation: piscar-vermelho 0.4s ease-in-out 3;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
 /* Fogão */
 /* #fogao{
   margin-top:8px;

@@ -156,10 +156,11 @@ function clienteVaiEmbora(mesa, penalizar=false){
   if(penalizar){
     pontos = Math.max(0, pontos - 5);
     atualizarHUD();
+    pontos = Math.max(0, pontos - 10);
   }
 
   const modal = el("modal-receitas");
-const btnReceitas = el("ver-receitas");
+const btnReceitas = el("background-placeholder");
 const spanClose = modal.querySelector(".close");
 const listaReceitas = el("lista-receitas");
 
@@ -236,42 +237,75 @@ function entregarPedido(){
     flashMensagem("Nenhum cliente esperando comida!");
     return;
   }
-  // achar primeira mesa que está esperando comida (FIFO)
-  const mesa = mesas.find(m=> m.pedido !== null && m.estado === "esperandoComida");
-  if(!mesa){
-    flashMensagem("Cliente não está pedindo agora.");
-    return;
-  }
 
-  const pedido = mesa.pedido;
-  // checa igualdade: todos os ingredientes do pedido devem estar presentes e quantidade igual
-  const ok = pedido.ingREDIENTS_CORRECT ? true : comparaIngredientes(pedido.ingredientes, pratoAtual);
+  let pedidoEntregue = false;
 
-  if(ok){
-    // sucesso
-    pontos += pedido.valor || 10;
-    // atualiza highscore se necessário
-    if(pontos > highscore){
-      highscore = pontos;
-      localStorage.setItem("sb_highscore", highscore);
-      mostrarHighscore();
+  for (let mesa of mesas) {
+    if(mesa.pedido !== null && mesa.estado === "esperandoComida"){
+      const ok = comparaIngredientes(mesa.pedido.ingredientes, pratoAtual);
+
+      if(ok){
+        // ✅ Pedido correto
+        pontos += mesa.pedido.valor || 10;
+
+        // atualiza highscore se necessário
+        if(pontos > highscore){
+          highscore = pontos;
+          localStorage.setItem("sb_highscore", highscore);
+          mostrarHighscore();
+        }
+
+        atualizarHUD();
+        clienteCome(mesa);
+        pedidoEntregue = true;
+        break; // ⚠️ sai do loop após entregar a primeira mesa correta
+      }
     }
-    atualizarHUD();
-    clienteCome(mesa);
-    limparPrato();
-    pedidoAtivo = existePedidoAtivoEmMesas() ? mesas.find(m=>m.pedido!==null).pedido : null;
-    atualizarHUD();
-  } else {
-    // errado: perde pontos e cliente fica irritado (perde mais paciência)
-    pontos = Math.max(0, pontos - 5);
-    atualizarHUD();
-    // penaliza paciencia
-    mesa.paciencia = Math.max(0, mesa.paciencia - 25);
-    const fill = mesa.el.querySelector(".barra-fill");
-    fill.style.width = mesa.paciencia + "%";
-    flashMensagem("Pedido errado!");
   }
+
+  if(!pedidoEntregue){
+    // ❌ Pedido errado: penaliza a primeira mesa que estava esperando
+    const mesaErro = mesas.find(m => m.pedido !== null && m.estado === "esperandoComida");
+    if(mesaErro){
+      pontos = Math.max(0, pontos - 5);
+      atualizarHUD();
+
+      // reação do cliente
+      const sprite = mesaErro.el.querySelector(".sprite");
+      sprite.textContent = "🤨";
+
+      // penaliza paciência
+      mesaErro.paciencia = Math.max(0, mesaErro.paciencia - 25);
+      const fill = mesaErro.el.querySelector(".barra-fill");
+      fill.style.width = mesaErro.paciencia + "%";
+
+      // pisca vermelho
+      piscarErroMesa(mesaErro);
+
+      flashMensagem("Pedido errado!");
+    }
+  }
+
+  // limpa prato sempre
+  pratoAtual = [];
+  renderPrato();
+
+  // atualiza HUD com algum pedido ativo
+  pedidoAtivo = existePedidoAtivoEmMesas() ? mesas.find(m=>m.pedido!==null).pedido : null;
+  atualizarHUD();
 }
+
+// quando erra a mesa fica vermelha por uns instantes
+function piscarErroMesa(mesa) {
+  const mesaContainer = mesa.el.closest(".mesa");
+  if (!mesaContainer) return;
+
+  mesaContainer.classList.add("erro");
+  setTimeout(() => {
+    mesaContainer.classList.remove("erro");
+  }, 1500); // mesmo tempo da animação
+}
+
 
 /* compara ingredientes: o pedido e o prato devem ter mesma lista (sem considerar ordem) */
 function comparaIngredientes(arrayPedido, arrayPrato){
@@ -340,7 +374,7 @@ function reiniciarJogo(){
 
 // Modal receitas
 const modal = el("modal-receitas");
-const btnReceitas = el("ver-receitas");
+const btnReceitas = el("background-placeholder");
 const spanClose = modal.querySelector(".close");
 const listaReceitas = el("lista-receitas");
 
