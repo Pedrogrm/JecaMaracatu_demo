@@ -394,16 +394,16 @@ window.addEventListener("click", e=>{
 });
 
 // Fogão
-// el("cozinhar").addEventListener("click", ()=>{
-//   if(pratoAtual.length === 0){
-//     flashMensagem("Adicione ingredientes antes de cozinhar!");
-//     return;
-//   }
-//   flashMensagem("Cozinhando... 🔥");
-//   setTimeout(()=>{
-//     flashMensagem("Prato pronto! 🍽️");
-//   }, 1200);
-// });
+el("cozinhar").addEventListener("click", ()=>{
+  if(pratoAtual.length === 0){
+    flashMensagem("Adicione ingredientes antes de cozinhar!");
+    return;
+  }
+  flashMensagem("Cozinhando... 🔥");
+  setTimeout(()=>{
+    flashMensagem("Prato pronto! 🍽️");
+  }, 1200);
+});
 
 /* ---------- start ---------- */
 window.addEventListener("load", ()=>{

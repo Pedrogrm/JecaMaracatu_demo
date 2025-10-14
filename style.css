@@ -265,7 +265,7 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:12p
 }
 
 /* Fogão */
-/* #fogao{
+#fogao{
   margin-top:8px;
   padding:8px;
   border-radius:8px;
@@ -279,6 +279,7 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:12p
   border:0;
   border-radius:6px;
   cursor:pointer;
-  background:#b85b2a;
+  background:linear-gradient(90deg,#c9660e,#c9840e);
   color:white;
-} */
+  
+}
