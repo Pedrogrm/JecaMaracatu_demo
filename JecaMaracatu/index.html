@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="game">
+        <header>
+            <div class="log">
+            <h2>🐊</h2>
+            <h1>JecaMaracatu</h1>
+            </div>
+        <nav>
+           <button>⚙️</button>
+           <button>🛒</button>
+           <button>📒</button>
+           <button>👤</button>
+        </nav>
+        </header>
+    </div>
+
+    <main>
+        <div class="tela" id="gameArea">
+            <img src="img/cenario_1_teste.png" alt="Cenário">
+
+            <img src="img/zeca-parado-GIF.gif" id="player">
+        </div>
+    
+
+        <script>
+            const gameArea = document.getElementById('gameArea');
+            const player = document.getElementById('player');
+
+            let posX = gameArea.clientWidth / 2; // posição inicial central
+            let posY = gameArea.clientHeight / 2;
+            let targetX = posX;
+            let targetY = posY;
+            const speed = 6;
+
+            player.style.position = "absolute";
+            player.style.left = posX + "px";
+            player.style.top = posY + "px";
+
+            function update() {
+                const dx = targetX - posX;
+                const dy = targetY - posY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance > 3) {
+                    posX += (dx / distance) * speed;
+                    posY += (dy / distance) * speed;
+                    player.style.left = posX + "px";
+                    player.style.top = posY + "px";
+                }
+
+                requestAnimationFrame(update);
+            }
+
+            gameArea.addEventListener('click', (event) => {
+                const rect = gameArea.getBoundingClientRect();
+                targetX = event.clientX - rect.left - 5;
+                targetY = event.clientY - rect.top - 5;
+            });
+
+            update();
+        </script>
+        </div>
+    </main>
+</body>
+</html>

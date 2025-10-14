@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JecaMaracatu</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #e0e0e0;
+
+      cursor: url('img/jacare.png'), default;
+
+    }
+
+    #game-area {
+      width: 1150px;
+      height: 500px;
+      background-color: #ccc;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    #player {
+      width: 10%;
+      background-color: transparent;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border-radius: 5px;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s linear;
+
+     /*border-left: 3px solid black;
+       border-top: 3px solid black; */
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-area">
+    <!-- <video controls loop id = "player">
+      <source src = "img/jeca.mov" type = "video/mov">
+    </video> -->
+    <img src = "img/jeca maracatu.png" loop = infinite id = "player">
+    
+  </div>
+
+  <script>
+    const gameArea = document.getElementById('game-area');
+    const player = document.getElementById('player');
+
+    let posX = 300; // posição inicial (meio)
+    let posY = 200;
+    let targetX = posX;
+    let targetY = posY;
+    const speed = 6; // velocidade do movimento
+
+    // Atualiza posição do personagem a cada frame
+    function update() {
+      const dx = targetX - posX;
+      const dy = targetY - posY;
+    //   calcula a diferença de distância a ser percorrida horizontalmente e verticamente utilizando o teorema de pitágoras
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      // alterar velocidade junto com este
+      if (distance > 3) {
+        posX += (dx / distance) * speed;
+        posY += (dy / distance) * speed;
+        player.style.left = posX + "px";
+        player.style.top = posY + "px";
+      }
+
+      // if (posX < 0) {
+      //   player.style.borderLeft = "0px"
+      //   player.style.borderRight = "3px solid black"
+      // } 
+
+      // if (posY < 0) {
+      //   player.style.borderTop = "0px"
+      //   player.style.borderDown = "3px solid black"
+      // } 
+
+      requestAnimationFrame(update);
+    }
+
+    function posMouse(e) {
+      num = console.log(e.offsetX, e.offsetY);
+    }
+
+    // Detecta clique e define novo destino
+    gameArea.addEventListener('click', (event) => {
+      const rect = gameArea.getBoundingClientRect();
+      targetX = event.clientX - rect.left - 5; // centraliza no meio do quadrado. Metade dos px do quadrado 
+      targetY = event.clientY - rect.top - 5;
+    });
+
+    update(); // inicia loop de animação
+  </script>
+</body>
+</html>
