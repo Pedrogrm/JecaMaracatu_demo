@@ -1,4 +1,142 @@
 <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>JecaMaracatu</title>
+</head>
+<body>
+  <div id="game">
+    <header>
+      <div class="log">
+        <h2>🐊</h2>
+        <h1>JecaMaracatu</h1>
+      </div>
+      <nav>
+        <button id="btnAbrirConfig">⚙️</button>
+        <button id="btnAbrirLoja">🛒</button>
+        <button id="btnAbrirReceitas">📒</button>
+        <button id="btnAbrirPerfil">👤</button>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="tela" id="gameArea">
+      <img src="img/cenario_1_teste.png" alt="Cenário" />
+      <img src="img/zeca-parado-GIF.gif" id="player" alt="Jogador" />
+    </div>
+  </main>
+
+  <!-- Script do jogo -->
+  <script>
+    const gameArea = document.getElementById("gameArea");
+    const player = document.getElementById("player");
+
+    let posX = gameArea.clientWidth / 2; // posição inicial central
+    let posY = gameArea.clientHeight / 2;
+    let targetX = posX;
+    let targetY = posY;
+    const speed = 6;
+
+    player.style.position = "absolute";
+    player.style.left = posX + "px";
+    player.style.top = posY + "px";
+
+    function update() {
+      const dx = targetX - posX;
+      const dy = targetY - posY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance > 3) {
+        posX += (dx / distance) * speed;
+        posY += (dy / distance) * speed;
+        player.style.left = posX + "px";
+        player.style.top = posY + "px";
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    gameArea.addEventListener("click", (event) => {
+      const rect = gameArea.getBoundingClientRect();
+      targetX = event.clientX - rect.left - 5;
+      targetY = event.clientY - rect.top - 5;
+    });
+
+    update();
+  </script>
+
+  <!-- Modal Receitas -->
+  <div id="receitas" class="modal">
+    <div class="modal-content">
+      <span class="fechar">&times;</span>
+      <h2>📒 Receitas</h2>
+      <p>Este é o conteúdo do seu modal.</p>
+    </div>
+  </div>
+
+  <!-- Modal Loja -->
+  <div id="loja" class="modal">
+    <div class="modal-content">
+      <span class="fechar">&times;</span>
+      <h2>🛒 Loja de Power-ups</h2>
+
+      <div id="powerupsLoja">
+        <div class="powerup" id="powerup-velocidade">
+          <h4>Pés Rápidos</h4>
+          <p>Velocidade +10</p>
+          <p>Custo: <span class="preco">100</span> 💰</p>
+          <button id="btnAumentarVelocidade">Comprar</button>
+        </div>
+
+        <div class="powerup" id="powerup-vida">
+          <h4>Bom Cozinheiro</h4>
+          <p>+5 de paciência</p>
+          <p>Custo: <span class="preco">150</span> 💰</p>
+          <button id="btnAumentarVida">Comprar</button>
+        </div>
+
+        <div class="powerup" id="powerup-dano">
+          <h4>Tempero Especial</h4>
+          <p>+5% de bônus</p>
+          <p>Custo: <span class="preco">200</span> 💰</p>
+          <button id="btnAumentarDano">Comprar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Perfil -->
+  <div id="perfil" class="modal">
+    <div class="modal-content">
+      <span class="fechar">&times;</span>
+      <h2>👤 Perfil</h2>
+      <p>Este é o conteúdo do seu modal.</p>
+    </div>
+  </div>
+
+  <!-- Modal Configurações -->
+  <div id="config" class="modal">
+    <div class="modal-content">
+      <span class="fechar">&times;</span>
+      <h2>⚙️ Configurações</h2>
+      <div class="config-opcoes">
+        <button id="btnSom">🔊 Som: Ativado</button>
+        <button id="btnLinguagem">🌐 Linguagem: Português</button>
+        <button id="btnJacquin">👨‍🍳 Érick Jacquin</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script principal -->
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,10 +152,10 @@
             <h1>JecaMaracatu</h1>
             </div>
         <nav>
-           <button>⚙️</button>
-           <button>🛒</button>
-           <button>📒</button>
-           <button>👤</button>
+           <button id="btnAbrirConfig">⚙️</button>
+           <button id="btnAbrirLoja">🛒</button>
+           <button id="btnAbrirReceitas">📒</button>
+           <button id="btnAbrirPerfil">👤</button>
         </nav>
         </header>
     </div>
@@ -69,5 +207,73 @@
         </script>
         </div>
     </main>
+
+    <!-- Modal receitas -->
+    <div id="receitas" class="modal">
+        <div class="modal-content">
+            <span class="fechar">&times;</span>
+            <h2>Receitas</h2>
+            <p>Este é o conteúdo do seu modal.</p>
+        </div>
+
+    </div>
+
+    <!-- Modal Loja -->
+    <div id="loja" class="modal">
+        <div class="modal-content">
+            <span class="fechar">&times;</span>
+            <h2>Loja de Power-ups</h2>
+            
+            <!-- Lista de Power-ups -->
+            <div id="powerupsLoja">
+            <div class="powerup" id="powerup-velocidade">
+                <h4>Pés Rapidos</h4>
+                <p>Velocidade +10</p>
+                <p>Custo: <span class="preco">100</span> 💰</p>
+                <button id="btnAumentarVelocidade">Comprar</button>
+            </div>
+
+            <!-- Adicionar mais power-ups aqui -->
+            <div class="powerup" id="powerup-vida">
+                <h4>Bom Cozinheiro</h4>
+                <p>+5 de paciencia</p>
+                <p>Custo: <span class="preco">150</span> 💰</p>
+                <button id="btnAumentarVida">Comprar</button>
+            </div>
+
+            <div class="powerup" id="powerup-dano">
+                <h4>Tempero especial</h4>
+                <p>+5% de bonus</p>
+                <p>Custo: <span class="preco">200</span> 💰</p>
+                <button id="btnAumentarDano">Comprar</button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Modal Perfil -->
+    <div id="perfil" class="modal">
+        <div class="modal-content">
+            <span class="fechar">&times;</span>
+            <h2>Perfil</h2>
+            <p>Este é o conteúdo do seu modal.</p>
+        </div>
+
+    </div>
+
+        <!-- Modal Configurações -->
+    <div id="config" class="modal">
+    <div class="modal-content">
+        <span class="fechar">&times;</span>
+        <h2>⚙️ Configurações</h2>
+        <div class="config-opcoes">
+        <button id="btnSom">🔊 Som: Ativado</button>
+        <button id="btnLinguagem">🌐 Linguagem: Português</button>
+        <button id="btnJacquin">👨‍🍳 Érick Jacquin</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
-</html>
+</html> -->
