@@ -211,6 +211,10 @@ nav button:active {
 
 /* Botoes da configuração */
 
+/* #config {
+  background-color: #ffe89d;
+} */
+
 .config-opcoes {
   display: flex;
   /* flex-direction: row; */
@@ -232,4 +236,37 @@ nav button:active {
 .config-opcoes button:hover {
   background-color: #f6910d;
   transform: scale(1.03);
+}
+
+/* ____________________________________________________________ */
+
+.powerup {
+  border-radius: 15px;
+  background-color: #ffe89d;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  padding: 10px;
+}
+
+.powerup h4 {
+  padding: 0 15px;
+  margin: 0;
+}
+
+.powerup button {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 0;
+  background-color: #ffac40;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.powerup button:hover {
+  background-color: #f6910d;
+  color: #5c4400;
 }
